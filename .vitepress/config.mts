@@ -20,9 +20,8 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Tutorial', link: '/guide/01-web-framework-basics' },
+      { text: 'Tutorial', link: '/guide/01-tanstack-start-server-functions' },
       { text: 'Appendices', link: '/tanstack-start-wire-format-spec' },
-      { text: 'Publishing', link: '/publishing' },
     ],
 
     sidebar: [
@@ -30,16 +29,22 @@ export default defineConfig({
         text: 'Tutorial',
         items: [
           { text: 'Overview', link: '/' },
-          { text: '1. Web framework basics', link: '/guide/01-web-framework-basics' },
-          { text: '2. TanStack Start basics', link: '/guide/02-tanstack-start-basics' },
-          { text: '3. Server functions', link: '/guide/03-server-functions-development' },
-          { text: '4. Request lifecycle', link: '/guide/04-request-lifecycle' },
-          { text: '5. Serialization and Seroval', link: '/guide/05-serialization-seroval' },
-          { text: '6. Trust boundaries', link: '/guide/06-trust-boundaries' },
-          { text: '7. Validation and parsing', link: '/guide/07-validation-and-parsing' },
-          { text: '8. Security properties', link: '/guide/08-security-properties' },
-          { text: '9. Failure patterns', link: '/guide/09-common-failure-patterns' },
-          { text: '10. Testing mindset', link: '/guide/10-testing-mindset' },
+          {
+            text: '1. Server functions',
+            link: '/guide/01-tanstack-start-server-functions',
+          },
+          {
+            text: '2. Project shape and routing',
+            link: '/guide/02-project-shape-and-routing',
+          },
+          { text: '3. createServerFn anatomy', link: '/guide/03-create-server-fn-anatomy' },
+          { text: '4. POST lifecycle', link: '/guide/04-post-request-lifecycle' },
+          { text: '5. GET and Seroval payloads', link: '/guide/05-get-and-seroval-payloads' },
+          { text: '6. data, context, sessions', link: '/guide/06-data-context-and-sessions' },
+          { text: '7. Zod validation choices', link: '/guide/07-zod-validation-choices' },
+          { text: '8. Responses and errors', link: '/guide/08-responses-and-errors' },
+          { text: '9. Failure patterns', link: '/guide/09-tanstack-failure-patterns' },
+          { text: '10. Testing workflow', link: '/guide/10-testing-tanstack-start' },
         ],
       },
       {
@@ -50,10 +55,6 @@ export default defineConfig({
           { text: 'Security test cases', link: '/tanstack-start-security-test-cases' },
           { text: 'Tooling appendix', link: '/tanstack-start-testing-tooling-plan' },
         ],
-      },
-      {
-        text: 'Site',
-        items: [{ text: 'Publishing', link: '/publishing' }],
       },
     ],
 

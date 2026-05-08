@@ -9,4 +9,4 @@ This directory is **Markdown source plus a VitePress site** used to publish huma
 | `npm run build` | Static output to `.vitepress/dist/` |
 | `npm run preview` | Serve the production build locally |
 
-After you push `main`, `.github/workflows/publish-documentation.yml` runs and publishes `.vitepress/dist` to the `gh-pages` branch. See **`publishing.md`** on this site for GitHub Pages settings and base URL quirks.
+After you push `main`, `.github/workflows/publish-documentation.yml` runs and publishes `.vitepress/dist` to the `gh-pages` branch.
