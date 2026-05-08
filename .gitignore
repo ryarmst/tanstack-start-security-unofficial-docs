@@ -1,0 +1,4 @@
+# Ignore VitePress / Node artifacts (keep lockfile committed for reproducible CI)
+node_modules/
+.vitepress/cache
+.vitepress/dist
