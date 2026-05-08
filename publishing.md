@@ -11,24 +11,44 @@ description: GitHub Pages, Actions, base URL, and alternatives.
 | Cloudflare Pages / Netlify | Also free tiers and Git-triggered builds; adds another dashboard. Prefer if you already use them. |
 | Read the Docs | Great for Sphinx/MkDocs; less natural for VitePress. |
 
-Recommendation: **[GitHub Pages](https://pages.github.com/)** + **[VitePress](https://vitepress.dev/)** + **GitHub Actions**. The workflow file belongs at `.github/workflows/publish-documentation.yml` on your **repository root** (sibling of the `docs/` folder), not inside `docs/`.
+Recommendation: **[GitHub Pages](https://pages.github.com/)** + **[VitePress](https://vitepress.dev/)** + **GitHub Actions**. Include **one** `.github/workflows/publish-documentation.yml` layout that matches how you organize git.
 
-VitePress gives you a TOC, local full-text search, dark mode, responsive layout, and side navigation without rewriting your existing `.md` files.
+### Option A — `git init` inside this folder (recommended for a docs-only repo)
 
-## Prerequisites
+The Git repository root is the VitePress project (this directory on disk):
 
-1. Push this workspace (or `/docs` as part of a repo) so the layout is:
+```text
+<repo-root>/
+  .github/workflows/publish-documentation.yml
+  .vitepress/
+  guide/
+  index.md
+  package.json
+  package-lock.json
+  ...
+```
+
+The workflow in this repo uses `npm ci` at the root and publishes `.vitepress/dist`.
+
+### Option B — Monorepo (`docs/` is a subdirectory)
+
+Git root sits **above** the VitePress project:
 
 ```text
 <repo-root>/
   docs/
     .vitepress/
-    index.md
-    tanstack-start-*.md
-    package.json
     ...
   .github/workflows/publish-documentation.yml
 ```
+
+Configure the workflow with `working-directory: docs`, `cache-dependency-path: docs/package-lock.json`, and `publish_dir: docs/.vitepress/dist`.
+
+VitePress gives you a TOC, local full-text search, dark mode, responsive layout, and side navigation without rewriting your existing `.md` files.
+
+## Prerequisites
+
+1. Push the repo with the workflow and site files matching **Option A** or **Option B** above.
 
 2. In GitHub: **Settings → Pages → Build and deployment**, set **Deploy from a branch**, branch **`gh-pages`**, folder **`/ (root)`**.
 
@@ -36,8 +56,9 @@ VitePress gives you a TOC, local full-text search, dark mode, responsive layout,
 
 ## Local preview
 
+From this project root (same folder as `package.json`):
+
 ```bash
-cd docs
 npm install
 npm run dev
 ```
@@ -57,7 +78,7 @@ The included workflow sets `VITEPRESS_BASE=/${repo_name}/` from `GITHUB_REPOSITO
 
 ## Custom domain
 
-Add a `CNAME` file in `docs/public/CNAME` (VitePress copies `public/` to dist). Point DNS per [GitHub’s custom domain docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site).
+Add a `CNAME` file in `public/CNAME` at this project root (VitePress copies `public/` to dist). Point DNS per [GitHub’s custom domain docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site).
 
 ## Alternative: MkDocs Material
 

@@ -1,0 +1,51 @@
+# TanStack Start security docs → GitHub Pages
+#
+# This workflow is meant for a repository whose ROOT is this folder (`docs/` on disk).
+#
+# Prerequisites:
+#   - GitHub Actions: Settings → Actions → General → Workflow permissions → Read and write
+#   - GitHub Pages: Settings → Pages → Source = branch gh-pages, folder / (root)
+#
+name: Publish documentation
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages-docs
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Compute VitePress base for GitHub Pages project site
+        # Repo user/foo → https://user.github.io/foo/
+        run: |
+          REPO_ONLY="${GITHUB_REPOSITORY##*/}"
+          echo "VITEPRESS_BASE=/${REPO_ONLY}/" >> "$GITHUB_ENV"
+
+      - run: npm ci
+
+      - name: Build
+        env:
+          VITEPRESS_BASE: ${{ env.VITEPRESS_BASE }}
+        run: npm run build
+
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: .vitepress/dist
